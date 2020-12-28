@@ -11,11 +11,35 @@ public class Main {
         Scanner in=new Scanner(System.in);
          File Obj1 = new File("G:\\studentdata.txt");
         List<Student> list=new ArrayList<>();
+        
+        try
+            {
+                File myObj = new File("G:\\studentdata.txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine())
+                    {
+                        String data = myReader.nextLine();
+                        String arr[]=data.split(",");
+                        list.add(new Student(arr[0], arr[1], Integer.parseInt(arr[2]) ,arr[3]));
+                    }
+                    myReader.close();
+                }
+        catch (FileNotFoundException e)
+            {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+            //debugging purpose
+//         for(Student s:list) {
+//             System.out.println(s.id + " " + s.name+" "+s.age+" "+s.city+"; ");
+//         }
+        
         while(true) {
             System.out.println("press respective number for the respective action 1.ADD , 2.Modify , 3.Delete , 4.View, 5.Save and Quit:");
             int n=in.nextInt();
             if(n==1) {
                 System.out.println("Enter name,age,city :");
+
                 String str=in.nextLine();
                 while(str.equals("")) {
                     str = in.nextLine();
@@ -115,6 +139,7 @@ public class Main {
                             continue;
                         }
                         //writing the highscore into the text file
+                        
                         int i=0;
                         for(i=0;i<list.size();i++){
                             String idf = list.get(i).id;
@@ -123,9 +148,8 @@ public class Main {
                             String cty = list.get(i).city;
                             
                             String finstr = idf+","+nm+","+ag+","+cty;
-                            myWriter.write(System.lineSeparator());
-                            
                             myWriter.write(finstr);
+                            myWriter.write(System.lineSeparator());
                         }
                         myWriter.close();
                     }
